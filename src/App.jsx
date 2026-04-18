@@ -1,6 +1,8 @@
-import StudentCard from "./components/StudentCard.jsx";
+import { useState } from "react";
+import StudentCard from "./components/StudentCard";
+import RegisterCourse from "./components/RegisterCourse";
 
-const courses = [
+const initialCourses = [
   {
     id: 1,
     name: "Client Side Programming",
@@ -28,6 +30,8 @@ const courses = [
 ];
 
 function App() {
+  const [courses, setCourses] = useState(initialCourses);
+
   return (
       <div style={{ padding: "20px", fontFamily: "Arial" }}>
         <h1>Rexhije Dehari</h1>
@@ -37,6 +41,8 @@ function App() {
         {courses.map((course) => (
             <StudentCard key={course.id} course={course} />
         ))}
+
+        <RegisterCourse setCourses={setCourses} />
       </div>
   );
 }
