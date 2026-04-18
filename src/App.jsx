@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import StudentCard from "./components/StudentCard";
 import RegisterCourse from "./components/RegisterCourse";
 
@@ -32,6 +32,10 @@ const initialCourses = [
 function App() {
   const [courses, setCourses] = useState(initialCourses);
 
+  const addCourse = useCallback((newCourse) => {
+    setCourses((prevCourses) => [...prevCourses, newCourse]);
+  }, []);
+
   return (
       <div style={{ padding: "20px", fontFamily: "Arial" }}>
         <h1>Rexhije Dehari</h1>
@@ -42,7 +46,7 @@ function App() {
             <StudentCard key={course.id} course={course} />
         ))}
 
-        <RegisterCourse setCourses={setCourses} />
+        <RegisterCourse addCourse={addCourse} />
       </div>
   );
 }

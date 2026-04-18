@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-function RegisterCourse({ setCourses }) {
+function RegisterCourse({ addCourse }) {
     const [form, setForm] = useState({
         name: "",
         credits: "",
@@ -8,6 +8,8 @@ function RegisterCourse({ setCourses }) {
         attending: false,
         difficulty: "Easy",
     });
+
+    const nameInputRef = useRef(null);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -33,17 +35,14 @@ function RegisterCourse({ setCourses }) {
             return;
         }
 
-        setCourses((prevCourses) => [
-            ...prevCourses,
-            {
-                id: Date.now(),
-                name: form.name,
-                credits: Number(form.credits),
-                grade: gradeNumber,
-                attending: form.attending,
-                difficulty: form.difficulty,
-            },
-        ]);
+        addCourse({
+            id: Date.now(),
+            name: form.name,
+            credits: Number(form.credits),
+            grade: gradeNumber,
+            attending: form.attending,
+            difficulty: form.difficulty,
+        });
 
         setForm({
             name: "",
@@ -52,6 +51,8 @@ function RegisterCourse({ setCourses }) {
             attending: false,
             difficulty: "Easy",
         });
+
+        nameInputRef.current.focus();
     };
 
     return (
@@ -61,6 +62,7 @@ function RegisterCourse({ setCourses }) {
             <div>
                 <label>Course name: </label>
                 <input
+                    ref={nameInputRef}
                     type="text"
                     name="name"
                     value={form.name}
